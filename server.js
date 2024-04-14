@@ -1,12 +1,17 @@
 const http = require("http");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+// 引用環境變數檔
+dotenv.config({ path: "./config.env" });
+const dbUrl = process.env.URL.replace("<password>", process.env.PASSWORD);
 
 // 連接資料庫
 // 如果localhost連接失敗，請改成127.0.0.1，此問題可能為 node / npm 版本造成
 mongoose
-  .connect("mongodb://127.0.0.1:27017/nodejs_homework2")
+  .connect(dbUrl)
   .then(() => console.log("資料庫連線成功"))
-  .catch((error) => console.log(error));
+  .catch((error) => console.error("資料庫連線成功"));
 
 //設定Schema
 const postSchema = new mongoose.Schema(
@@ -129,7 +134,7 @@ const reqListen = async (req, res) => {
         res.write(
           JSON.stringify({
             status: "success",
-            data: "成功刪除",
+            data: "刪除成功",
           })
         );
         res.end();
@@ -160,7 +165,7 @@ const reqListen = async (req, res) => {
       res.write(
         JSON.stringify({
           status: "success",
-          data: "刪除成功",
+          data: "資料清空",
         })
       );
       res.end();
@@ -236,6 +241,6 @@ const reqListen = async (req, res) => {
 };
 
 const server = http.createServer(reqListen);
-server.listen(3005, () => {
-  console.log("listen port 3005");
+server.listen(process.env.PORT, () => {
+  console.log("PORT開始監聽");
 });
