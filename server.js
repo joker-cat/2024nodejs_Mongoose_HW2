@@ -24,7 +24,7 @@ const Post = mongoose.model("post", postSchema);
 
 const reqListen = async (req, res) => {
   if (req.url === "/favicon.ico") return;
-  
+
   let body = "";
   req.on("data", (chunk) => (body += chunk));
 
@@ -90,6 +90,6 @@ const reqListen = async (req, res) => {
 };
 
 const server = http.createServer(reqListen);
-server.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => { //如果部屬在 render 的話，會直接拿該伺服器的PORT
   console.log("PORT開始監聽");
 });
