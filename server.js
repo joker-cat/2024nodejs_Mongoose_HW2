@@ -12,7 +12,8 @@ const dbUrl = process.env.URL.replace("<password>", process.env.PASSWORD);
 // 連接資料庫
 // 如果localhost連接失敗，請改成127.0.0.1，此問題可能為 node / npm 版本造成
 mongoose
-  .connect(dbUrl)
+  // .connect(dbUrl)
+  .connect('mongodb://127.0.0.1:27017/nodejs_homework2')
   .then(() => console.log("資料庫連線成功"))
   .catch((error) => console.error("資料庫連線失敗"));
 
